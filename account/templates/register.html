@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load widget_tweaks %}
+<form method="POST">
+    {% csrf_token %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Kayıt Ol</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                             {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <div class="form-group {% if form.username.errors %} has-error {% endif %}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form.username|add_class:"form-control" }}
+                            </div>
+                            <span class="help-block">{{ form.username.errors }}</span>
+                        </div>
+                        <div class="form-group {% if form.email.errors %} has-error {% endif %}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                {{ form.email|add_class:"form-control" }}
+                            </div>
+                            <span class="help-block">{{ form.email.errors }}</span>
+                        </div>
+                        <div class="form-group {% if form.password1.errors %} has-error {% endif %}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                {{ form.password1|add_class:"form-control" }}
+                            </div>
+                            <span class="help-block">{{ form.password1.errors }}</span>
+                        </div>
+                        <div class="form-group {% if form.password2.errors %} has-error {% endif %}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                {{ form.password2|add_class:"form-control" }}
+                            </div>
+                            <span class="help-block">{{ form.password2.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-block btn-primary">Kayıt Ol <i class="fa fa-user-plus"></i></button>
+                    </div>
+                </div>
+            </form>
+{% endblock %}

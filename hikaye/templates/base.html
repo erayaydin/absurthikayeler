@@ -49,10 +49,10 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'book_create' %}">Yeni Kitap</a></li>
-                <li><a href="#">Çıkış Yap</a></li>
+                <li><a href="{% url 'logout' %}">Çıkış Yap</a></li>
                 {% else %}
-                <li><a href="#">Giriş Yap</a></li>
-                <li><a href="#">Kayıt Ol</a></li>
+                <li><a href="{% url 'login' %}">Giriş Yap</a></li>
+                <li><a href="{% url 'register' %}">Kayıt Ol</a></li>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->

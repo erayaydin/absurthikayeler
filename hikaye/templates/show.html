@@ -62,9 +62,12 @@
                     {% endfor %}
                     {% if user.is_authenticated %}
                     <div>
-                        <form>
+                        <form method="post">
+                            {% load widget_tweaks %}
+                            {% csrf_token %}
                             <div class="form-group">
-                                <textarea class="form-control" data-provide="markdown"></textarea>
+                                {{ commentform.content|add_class:"form-control" }}
+                                <span class="help-block">{{ commentform.content.errors }}</span>
                             </div>
                             <div class="text-right">
                                 <button class="btn btn-primary btn-sm">Gönder <i class="fa fa-mail-forward"></i></button>
