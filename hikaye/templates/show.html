@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ book.title }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if book.parent %}
+                    <a href="{% url 'book_show' book.parent.id %}" class="btn btn-block btn-primary">{{ book.parent.title }} Hikayesinin Devamı</a>
+                    <hr />
+                    {% endif %}
+                    <article>
+                        {{ book.content }}
+                        <div>
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> {{ book.author.username }}</a>
+                                {% if user.is_authenticated %}
+                                {% if user == book.author %}
+                                <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Düzenle</a>
+                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil</a>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="pull-right">
+                                {% for newbook in book.newbooks %}
+                                <a class="btn btn-info btn-xs" href="{% url 'book_show' newbook.id %}"><i class="fa fa-clone"></i> {{ newbook.title }}</a>
+                                {% endfor %}
+                                {% if user.is_authenticated %}
+                                <a class="btn btn-success btn-xs" href="{% url 'book_create_from_parent' book.id %}"><i class="fa fa-plus"></i> Buradan Türet</a>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </article>
+                    <hr />
+                    {% for comment in book.comments %}
+                    <article>
+                        {{ comment.content }}
+                        <div>
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> {{ comment.author.username }}</a>
+                                {% if user.is_authenticated %}
+                                {% if user == comment.author %}
+                                <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Düzenle</a>
+                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil</a>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="pull-right">
+                                {% for newbook in comment.newbooks %}
+                                <a class="btn btn-info btn-xs" href="{% url 'book_show' comment.id %}"><i class="fa fa-clone"></i> {{ comment.title }}</a>
+                                {% endfor %}
+                                {% if user.is_authenticated %}
+                                <a class="btn btn-success btn-xs" href="{% url 'book_create_from_parent' comment.id %}"><i class="fa fa-plus"></i> Buradan Türet</a>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </article>
+                    <hr />
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                    <div>
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control" data-provide="markdown"></textarea>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-primary btn-sm">Gönder <i class="fa fa-mail-forward"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger">
+                        Mesaj yazmak için giriş yapmalısınız.
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="panel-footer">
+                    <div class="pull-left">
+                        <div class="btn-group" role="group">
+                            {% for category in book.categories.all %}
+                            <a href="{% url 'category_show' category.id %}" class="btn btn-success">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Görüntüleme"><i class="fa fa-eye"></i> {{ book.views }}</button>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Hikaye Devamı"><i class="fa fa-comments-o"></i> {{ book.comments.count }}</button>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Türetme"><i class="fa fa-clone"></i> {{ book.newbooks.count }}</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+{% endblock %}

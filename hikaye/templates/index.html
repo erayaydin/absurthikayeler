@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for book in books %}
+<div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ book.title }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ book.content }}</p>
+                </div>
+                <div class="panel-footer">
+                    <div class="pull-left">
+                        <div class="btn-group" role="group">
+                            {% for category in book.categories.all %}
+                            <a href="{% url 'category_show' category.id %}" class="btn btn-success">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Görüntüleme"><i class="fa fa-eye"></i> {{ book.views }}</button>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Hikaye Devamı"><i class="fa fa-comments-o"></i> {{ book.comments.count }}</button>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Türetme"><i class="fa fa-clone"></i> {{ book.newbooks.count }}</button>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'book_show' book.id %}" class="btn btn-primary">Bi Arkadaşa Bakıp Çıkıcam <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Yep Yeni Bir Hikaye</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control" data-provide="markdown"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <select name="tur" multiple class="form-control">
+                                    <option>Bilim Kurgu</option>
+                                    <option>Aksiyon</option>
+                                    <option>Macera</option>
+                                    <option>Fantastik</option>
+                                </select>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-primary btn-sm">Gönder <i class="fa fa-mail-forward"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
