@@ -24,3 +24,10 @@ class Book(models.Model):
 
     def newbooks(self):
         return self.contents.filter(type=True)
+
+    def totalNewBooks(self):
+        total = self.contents.filter(type=True).count()
+        for comment in self.contents.filter(type=False):
+            total += comment.contents.filter(type=True).count()
+
+        return total

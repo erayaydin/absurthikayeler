@@ -14,6 +14,8 @@ def bookIndex(request):
 def bookShow(request, book_id):
     commentform = CommentForm()
     book = Book.objects.get(pk=book_id)
+    book.views += 1
+    book.save()
     if request.method == "POST":
         commentform = CommentForm(request.POST)
 
@@ -39,9 +41,9 @@ def newBook(request, parent_id=None):
         if form.is_valid():
             newbook = form.save(commit=False)
             newbook.author = request.user
+            newbook.type = True
             if parent_id != None:
                 newbook.parent = Book.objects.get(pk=parent_id)
-                newbook.type = True
             newbook.save()
             form.save_m2m()
             return redirect('/')
